@@ -6,3 +6,4 @@ mod sqrt;
 
 
 pub use sqrt::Sqrt;
+pub use core::intrinsics::{sqrtf32, sqrtf64};
