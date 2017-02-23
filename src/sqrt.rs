@@ -28,11 +28,11 @@ macro_rules! trait_sqrt_no_cast {
         impl Sqrt for $t {
             #[inline(always)]
             fn sqrt(self) -> Self {
-                if self < 0.0 as $t {
+                if self < 0.0 {
                     $t::NAN
                 } else {
                     unsafe {
-                        $f(self) 
+                        $f(self)
                     }
                 }
             }
