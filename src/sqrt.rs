@@ -3,19 +3,19 @@ use core::{f32, f64};
 
 
 pub trait Sqrt {
-    fn sqrt(self) -> Self;
+    fn sqrt(&self) -> Self;
 }
 
 macro_rules! trait_sqrt {
     ($t:ident, $a:ident, $f:ident) => (
         impl Sqrt for $t {
             #[inline(always)]
-            fn sqrt(self) -> Self {
-                if self <= 0 as $t {
+            fn sqrt(&self) -> Self {
+                if *self <= 0 as $t {
                     0 as $t
                 } else {
                     unsafe {
-                        $f(self as $a) as $t
+                        $f(*self as $a) as $t
                     }
                 }
             }
@@ -27,12 +27,12 @@ macro_rules! trait_sqrt_no_cast {
     ($t:ident, $f:ident) => (
         impl Sqrt for $t {
             #[inline(always)]
-            fn sqrt(self) -> Self {
-                if self < 0.0 {
+            fn sqrt(&self) -> Self {
+                if *self < 0.0 {
                     $t::NAN
                 } else {
                     unsafe {
-                        $f(self)
+                        $f(*self)
                     }
                 }
             }
@@ -40,13 +40,13 @@ macro_rules! trait_sqrt_no_cast {
     );
 }
 
-trait_sqrt!(usize, f32, sqrtf32);
+trait_sqrt!(usize, f64, sqrtf64);
 trait_sqrt!(u8, f32, sqrtf32);
 trait_sqrt!(u16, f32, sqrtf32);
 trait_sqrt!(u32, f64, sqrtf64);
 trait_sqrt!(u64, f64, sqrtf64);
 
-trait_sqrt!(isize, f32, sqrtf32);
+trait_sqrt!(isize, f64, sqrtf64);
 trait_sqrt!(i8, f32, sqrtf32);
 trait_sqrt!(i16, f32, sqrtf32);
 trait_sqrt!(i32, f64, sqrtf64);
