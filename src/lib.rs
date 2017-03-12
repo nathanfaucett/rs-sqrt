@@ -6,4 +6,17 @@ mod sqrt;
 
 
 pub use sqrt::Sqrt;
-pub use core::intrinsics::{sqrtf32, sqrtf64};
+
+
+#[inline(always)]
+pub fn sqrtf32(x: f32) -> f32 {
+    unsafe {
+        core::intrinsics::sqrtf32(x)
+    }
+}
+#[inline(always)]
+pub fn sqrtf64(x: f64) -> f64 {
+    unsafe {
+        core::intrinsics::sqrtf64(x)
+    }
+}
